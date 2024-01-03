@@ -2,5 +2,33 @@
 
 {%extends "base.html"%} <!-- herança da página base -->
 {% block title %}Login{% endblock %}
-{% block content%} <h1>This is the login page</h1>
+{% block content%}
+<form method="POST">
+    <h3 align="CENTER">Login</h3>
+    <!--Grupo de etiqueta e introdução de email -->
+    <div class="form-group">
+        <label for="email">Endereço Email</label>
+        <input type="email"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Introduz o email">
+
+    </div>
+
+     <!--Grupo de etiqueta e introdução da palavra-chave -->
+     <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password"
+               class="form-control"
+               id="password"
+               name="password"
+               placeholder="Introduz a password">
+
+    </div>
+
+    <br />
+    <!-- botão que se encontra no bootsrap que está na página base-->
+    <button type="submit" class="btn btn-primary">Log In</button>
+</form>
 {% endblock%}
