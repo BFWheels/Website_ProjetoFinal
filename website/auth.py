@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, request
+from flask import Blueprint,render_template, request,flash
 
 
 auth = Blueprint('auth',__name__)
@@ -15,8 +15,19 @@ def logout():
 def sign_up():
     if request.method== 'POST':
         email =request.form.get('email')
-        nome = request.form.get('Nome')
+        Nome = request.form.get('Nome')
         password1=request.form.get('password1')
         password2= request.form.get('password2')
+
+    if len(email) < 4:
+        flash('Email must be greater than 3 characters.', category='erro')
+    elif len(Nome)<2:
+        flash('O nome tem que ter pelo menos duas letras.', category='erro')
+    elif password1 != password2:
+        flash('A password não coíncide ', category='erro')
+    elif len(password1) < 7:
+        flash('A password tem que ter pelo menos 7 caractéres.', category='erro')
+    else:
+        flash('A conta foi criada com sucesso', category='sucesso')
 
     return render_template("sign_up.html")
