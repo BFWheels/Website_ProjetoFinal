@@ -11,6 +11,7 @@ class Notas(db.Model):
 
 
 
+
     #  Base de dados do utilizador( adicionar data de nascimento)
 class Utilizador(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
