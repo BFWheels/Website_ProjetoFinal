@@ -21,9 +21,9 @@ def login():
                 login_user(utilizador, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('A password não corresponde ao utilizador, por favor tenta de novo', category='erro')
+                flash('A password incorreta', category='erro')
         else:
-            flash('O utilizador não existe, precisas de criar um para aceder ao site', category='erro')
+            flash('O utilizador não existe, cria um para aceder ao site', category='erro')
 
     return render_template("login.html", utilizador=current_user)
 
@@ -57,10 +57,10 @@ def sign_up():
         elif len(password1) < 7:
             flash('A password tem que ter pelo menos 7 caractéres.', category='erro')
         else:
-            new_user = Utilizador(email=email, nome=nome, password=generate_password_hash(password1, method='scrypt'))
-            db.session.add(new_user)
+            novo_utilizador = Utilizador(email=email, nome=nome, password=generate_password_hash(password1, method='scrypt'))
+            db.session.add(novo_utilizador)
             db.session.commit()
-            login_user(utilizador, remember=True)
+            login_user(novo_utilizador, remember=True)
             flash('A conta foi criada com sucesso', category='sucesso')
 
             return redirect(url_for('views.home'))
