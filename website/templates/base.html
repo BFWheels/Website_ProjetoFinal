@@ -22,6 +22,7 @@
     <title>{% block title %} Blank {% endblock %}</title>
 </head>
 <body>
+
 <!-- Barra de navegação que está responsiva-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <button class="navbar-toggler"
@@ -33,11 +34,13 @@
             </span>
     </button>
 
+
     <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
             {%if utilizador.is_authenticated %}
             <a class="nav-item nav-link" id="home" href="/">Home</a>
             <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+
             {% else %}
             <a class="nav-item nav-link" id="login" href="/login">Login</a>
             <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
@@ -45,30 +48,33 @@
         </div>
 
     </div>
-
+    <!-- elemento que se apresenta após login -->
+    {%if utilizador.is_authenticated %}
+     <span class="nav-item" style="color: rgba(255,255,255,.5);margin-left: auto;">Bem-vindo {{utilizador.nome}}</span>
+    {%endif%}
 </nav>
 <!-- Este bloco de código é mensagem de flash que estara em cada route necessário
  -->
 {% with messages = get_flashed_messages(with_categories=true) %}
-{%if messages %}
-{%for category,message in messages%}
-{%if category == 'erro' %}
-<div class="alert alert-danger alert.dismissable fade show" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% else %}
-<div class="alert alert-success alert.dismissable fade show" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{%endif%}
-{%endfor%}
-{%endif%}
+    {%if messages %}
+        {%for category,message in messages%}
+            {%if category == 'erro' %}
+                <div class="alert alert-danger alert.dismissible fade show" role="alert">
+                {{message}}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert.dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {%endif%}
+        {%endfor%}
+    {%endif%}
 {%endwith%}
 
 
