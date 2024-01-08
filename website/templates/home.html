@@ -1,0 +1,27 @@
+
+<!-- pagina principal-->
+
+{%extends "base.html"%} <!-- herança da página base -->
+
+{% block title %}Home{% endblock %}
+{% block content%}
+<h1 align="center">Notas</h1>
+<ul class="list-group list-group-flush" id="nota">
+    {%for nota in utilizador.notas%}
+    <li class="list-group-item">{{nota.data}}
+        <form method='POST' action='/eliminar'>
+            <button type="submit" class="close" value='{{nota.id}}' >
+                <span aria-hidden="true">&times;</span>
+        </button>
+        </form>
+    </li>
+    {%endfor%}
+</ul>
+<form method="POST">
+    <textarea name="notas" id="notas" class="form-control"></textarea>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add note</button>
+    </div>
+</form>
+{% endblock%}
