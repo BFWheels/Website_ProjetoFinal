@@ -9,9 +9,10 @@
 <ul class="list-group list-group-flush" id="nota">
     {%for nota in utilizador.notas%}
     <li class="list-group-item">{{nota.data}}
-        <form method="POST">
+        <form method='POST' action='eliminar'>
+        <input type=hidden name='id' value='{{Notas.utilizador_id}}'>
         <button type="button" class="close" >
-            <span aria-hidden="true">&times;</span>
+            <span> aria-hidden="true">&times;</span>
         </button>
         </form>
     </li>

@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 class Notas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True),default=func.now())  # Usar registo temporal para as reservas dos carros
+    date = db.Column(db.DateTime(timezone=True), default=func.now())  # Usar registo temporal para as reservas dos carros
     utilizador_id = db.Column(db.Integer, db.ForeignKey('utilizador.id'))  # usar este codigo para definir reservas
 
 

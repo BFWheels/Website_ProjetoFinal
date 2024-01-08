@@ -7,7 +7,7 @@ from website import db
 views = Blueprint('views',__name__)
 
 
-@views.route('/', methods=['GET','POST'])
+@views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
     if request.method == 'POST':
@@ -22,12 +22,11 @@ def home():
             flash('Nota criada', category='sucesso')
     return render_template("home.html",utilizador = current_user)
 
-@views.route('/', methods=['POST'])
 @login_required
-def eliminar():
-
-    notas = Notas.query.filter_by(utilizador_id = current_user.id ).delete()
-    db.session.commit()
-    flash('Nota Apagada', category='sucesso')
+def eliminar(id):
+    if request.method == 'POST':
+        notas = Notas.query.filter_by(id = current_user.id ).delete()
+        db.session.commit()
+        flash('Nota Apagada', category='sucesso')
 
     return render_template("home.html", utilizador=current_user)
