@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request,flash
+from flask import Blueprint,render_template,request,flash,redirect,url_for
 from flask_login import login_required,current_user
 from website.models import Notas,Utilizador
 from website import db
@@ -33,5 +33,5 @@ def eliminar():
         notas = Notas.query.filter_by(id=Notas.id).delete()
         db.session.commit()
         flash('Nota Apagada', category='sucesso')
-    return render_template("home.html", utilizador=current_user)
+    return redirect(url_for('views.home'))
 
