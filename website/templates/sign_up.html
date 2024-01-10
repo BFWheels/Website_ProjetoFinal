@@ -1,10 +1,32 @@
 <!-- pagina para criar utilizador-->
 
 {%extends "base.html"%} <!-- herança da página base -->
-{% block title %}Sign-up{% endblock %}{% block content%}
+{% block title %}Registar{% endblock %}{% block content%}
 <form method="POST">
-    <h3 align="CENTER">Sign Up</h3>
-    <!--Grupo de etiqueta e introdução de email -->
+    <h2>Registo</h2>
+
+    <!--Grupo de etiqueta e introdução do Nome -->
+     <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text"
+               class="form-control"
+               id="nome"
+               name="nome"
+               placeholder="Introduz o Nome">
+
+    </div>
+
+       <!--Grupo de etiqueta e introdução do último nome -->
+     <div class="form-group">
+        <label for="apelido">Apelido</label>
+        <input type="text"
+               class="form-control"
+               id="apelido"
+               name="apelido"
+               placeholder="Introduz o Apelido">
+
+    </div>
+     <!--Grupo de etiqueta e introdução de email -->
     <div class="form-group">
         <label for="email">Endereço Email</label>
         <input type="email"
@@ -14,27 +36,17 @@
                placeholder="Introduz o email">
 
     </div>
-    <!--Grupo de etiqueta e introdução do Nome -->
-     <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text"
-               class="form-control"
-               id="nome"
-               name="nome"
-               placeholder="Introduz o teu nome">
-
-    </div>
-    <!--adicionar grupo de etiqueta com datas de nascimento
+    <!--adicionar grupo de etiqueta com datas de nascimento-->
 
      <div class="form-group">
         <label for="dataNascimento">Data de Nascimento</label>
-        <input type="date" ?? >> verificar se a data é type text ou date
+        <input type="date"
                class="form-control"
                id="dataNascimento"
                name="dataNascimento"
-               placeholder="DD/MM/AAAA">
-               -->
+               placeholder="dd/mm/yyyy">
 
+    </div>
      <!--Grupo de etiqueta e introdução da palavra-chave -->
      <div class="form-group">
         <label for="password1">Password</label>
@@ -56,7 +68,7 @@
 
     </div>
     <br />
-    <!-- botão que se encontra no bootsrap que está na página base-->
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <!-- botão de registo -->
+    <button type="submit" class="btn btn-primary">Registar</button>
 </form>
 {% endblock%}

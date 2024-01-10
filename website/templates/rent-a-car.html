@@ -3,16 +3,14 @@
 
 {%extends "base.html"%} <!-- herança da página base -->
 
-{% block title %}Home{% endblock %}
+{% block title %}Reservas{% endblock %}
 {% block content%}
-<h1 align="center">Notas</h1>
-
+<h1 align="center">Área de Reserva</h1>
 <ul class="list-group list-group-flush" id="reservas">
     {%for reserva in utilizador.reservas%}
     <li class="list-group-item">{{reserva.data}}
         <form method='POST' action='/eliminar/{{reserva.id}}'>
             <button type="submit" class="close" value='{{reserva.id}}' >
-
                 <span aria-hidden="true">&times;</span>
         </button>
         </form>
