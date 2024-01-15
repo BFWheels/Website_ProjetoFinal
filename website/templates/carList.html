@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Carros</title>
-</head>
-<body>
 
-</body>
-</html>
+{%extends "base.html"%} <!-- herança da página base -->
+
+{% block title %}CarList{% endblock %}
+{% block content%}
+
+<h1 align="center">Frota da empresa</h1>
+
+<ul class="list-group list-group-flush" id="carlist">
+    {%for marca in carro%}
+    <li class="list-group-item border-bottom-0">
+
+        <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}"><h4>{{marca.marca}}</h4></a>
+        <!-- imagem com marca_veiculo e tenho que pôr o path no statcis(../statics/imagem.png)-->
+    </li>
+    {%endfor%}
+</ul>
+
+<form method="get" action="carList/{{marca}}">
+
+    <ul class="list-group list-group-flush" id="modelList">
+
+        {%for veiculo in modelo%}
+
+        <li class="list-group-item border-bottom-0">
+           <h5> Marca: {{veiculo.marca_carro}} <br>
+                Modelo: {{veiculo.modelo}} <br>
+                Combustível: {{veiculo.combutivel}} <br>
+                Nº de passageiros: {{veiculo.lugares}}
+           </h5>
+        </li>
+
+        {%endfor%}
+            <a href="/carList" class="btn btn-primary">Voltar</a>
+    </ul>
+</form>
+
+
+
+
+
+
+
+
+
+{% endblock%}

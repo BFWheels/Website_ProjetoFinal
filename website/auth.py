@@ -2,13 +2,14 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 import datetime
 from website.models import Utilizador
 from website import db
+from dateutil.relativedelta import relativedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 
 
 auth = Blueprint('auth', __name__)
 dataHoje = datetime.date.today()
-
+maiorIdade = datetime.date(dataHoje.year-18, dataHoje.month, dataHoje.day)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -43,11 +44,8 @@ def sign_up():
         email = request.form.get('email')
         nome = request.form.get('nome')
         apelido = request.form.get('apelido')
-        dataNascimento = request.form.get('dataNascimento')
-        nascimento = datetime.datetime.strptime(dataNascimento,'%Y-%m-%d').date()
-        ano = datetime.timedelta(dataHoje.year - nascimento.year)
-        mes = datetime.timedelta(dataHoje.month - nascimento.month)
-        dia = datetime.timedelta(dataHoje.day - nascimento.day)
+        datanascimento = request.form.get('dataNascimento')
+        nascimento = datetime.datetime.strptime(datanascimento, '%Y-%m-%d').date()
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
         utilizador = Utilizador.query.filter_by(email=email).first()
@@ -59,7 +57,7 @@ def sign_up():
             flash('O nome tem que ter pelo menos duas letras.', category='erro')
         elif len(apelido) < 2:
             flash('O apelido tem que ter pelo menos duas letras.', category='erro')
-        elif ano <= datetime.timedelta(18) and mes <= datetime.timedelta(0) and dia < datetime.timedelta(0):
+        elif nascimento > maiorIdade:
             flash('a idade tem que ser superior a 18 anos', category='erro')
         elif password1 != password2:
             flash('A password não coíncide ', category='erro')
@@ -70,7 +68,7 @@ def sign_up():
         elif any(not char.isalnum() for char in password1) < 1:
             flash('A password deve conter pelo menos um caracter especial!', category='erro')
         else:
-            novo_utilizador = Utilizador(email=email, nome=nome, apelido=apelido, dataNascimento=nascimento,password=generate_password_hash(password1, method='scrypt'))
+            novo_utilizador = Utilizador(email=email, nome=nome, apelido=apelido, datanascimento=nascimento, password=generate_password_hash(password1, method='scrypt'))
             db.session.add(novo_utilizador)
             db.session.commit()
             login_user(novo_utilizador, remember=True)
