@@ -12,43 +12,11 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    if request.method == 'POST':
-        reservas = request.form.get('reservas')
-        if len(reservas) < 1:
-            flash('Nota inixistente', category='erro')
-        else:
-            nova_reserva = Reservas(data=reservas, utilizador_id=current_user.id)
-            db.session.add(nova_reserva)
 
-            db.session.commit()
-            flash('Nota criada', category='sucesso')
     return render_template("home.html", utilizador=current_user)
 
 
-@views.route('/rent-a-car', methods=['GET', 'POST'])
-@login_required
-def rent():
-    if request.method == 'POST':
-        reservas = request.form.get('reservas')
-
-        if len(reservas) < 1:
-            flash('Nota inixistente', category='erro')
-        else:
-            nova_reserva = Reservas(data=reservas, utilizador_id=current_user.id)
-            db.session.add(nova_reserva)
-            db.session.commit()
-            flash('Reserva criada', category='sucesso')
-    return render_template("rent-a-car.html", utilizador=current_user)
-
-
-@views.route('/eliminar/<id>', methods=['POST'])
-@login_required
-def eliminar(id):
-    if request.method == 'POST':
-        Reservas.query.filter_by(id=id).delete()
-        db.session.commit()
-        flash('Reserva cancelada', category='sucesso')
-    return redirect(url_for('views.home'))
+# Routes para visualizar carros
 
 
 @views.route('/carList', methods=['GET'])
@@ -63,4 +31,38 @@ def carlist():
 def modelist(marca):
     modelo = Modelo.query.filter_by(marca_carro=marca).all()
     return render_template("carList.html", utilizador=current_user, modelo=modelo)
+
+# Routes para reservas
+
+
+@views.route('/rent-a-car', methods=['GET', 'POST'])
+@login_required
+def rent_brand():
+    carro = Carro.query.all()
+    marca = request.form.get('marca')
+    modelo = Modelo.query.filter_by(marca_carro=marca).all()
+    ''' if request.method == 'POST':
+         reservas = request.form.get('reservas')
+ 
+         if len(reservas) < 1:
+             flash('Nota inixistente', category='erro')
+         else:
+             nova_reserva = Reservas(data=reservas, utilizador_id=current_user.id)
+             db.session.add(nova_reserva)
+             db.session.commit()
+             flash('Reserva criada', category='sucesso')'''
+    return render_template("rent-a-car.html", utilizador=current_user, carro=carro, modelo=modelo)
+
+
+
+@views.route('/eliminar/<id>', methods=['POST'])
+@login_required
+def eliminar(id):
+    if request.method == 'POST':
+        Reservas.query.filter_by(id=id).delete()
+        db.session.commit()
+        flash('Reserva cancelada', category='sucesso')
+    return redirect(url_for('views.home'))
+
+
 

@@ -6,7 +6,33 @@
 {% block title %}Reservas{% endblock %}
 {% block content%}
 <h1 align="center">Área de Reserva</h1>
-<ul class="list-group list-group-flush" id="reservas">
+
+<form method="POST">
+    <label for="cars">Seleciona a marca:</label>
+
+    <select name="cars" id="cars" >
+        <option value="">Seleciona uma marca</option>
+        {%for marca in carro%}
+        <option value="marca">{{marca.marca}}</option>
+        {%endfor%}
+    </select>
+
+    <br><br>
+    <label for="cars">Seleciona o modelo:</label>
+
+    <select name="model" id="model">
+        {%for carro in modelo%}
+        <option value="modelo">{{carro.modelo}}</option>
+        {%endfor%}
+    </select>
+
+    <br><br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Marcar Reserva</button>
+    </div>
+</form>
+
+<!--ul class="list-group list-group-flush" id="reservas">
     {%for reserva in utilizador.reservas%}
     <li class="list-group-item">{{reserva.data}}
         <form method='POST' action='/eliminar/{{reserva.id}}'>
@@ -16,12 +42,6 @@
         </form>
     </li>
     {%endfor%}
-</ul>
-<form method="POST">
-    <textarea name="reservas" id="reservas" class="form-control"></textarea>
-    <br>
-    <div align="center">
-        <button type="submit" class="btn btn-primary">Marcar Reserva</button>
-    </div>
-</form>
+</ul-->
+
 {% endblock%}
