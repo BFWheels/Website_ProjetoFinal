@@ -1,5 +1,5 @@
 
-<!-- pagina principal-->
+
 
 {%extends "base.html"%} <!-- herança da página base -->
 
@@ -7,25 +7,43 @@
 {% block content%}
 <h1 align="center">Área de Reserva</h1>
 
-<form method="POST">
-    <label for="cars">Seleciona a marca:</label>
+<form method="POST" action='/rent-a-car/reservar'>
+    <label for="model">Carro para reservar:</label>
 
-    <select name="cars" id="cars" >
-        <option value="">Seleciona uma marca</option>
+    <select name="car" id="car" onchange="getModel()">
+        <option>Seleciona o carro</option>
         {%for marca in carro%}
-        <option value="marca">{{marca.marca}}</option>
+        <option value="{{marca.marca}}">{{marca.marca}}</option>
         {%endfor%}
     </select>
 
-    <br><br>
-    <label for="cars">Seleciona o modelo:</label>
 
-    <select name="model" id="model">
-        {%for carro in modelo%}
-        <option value="modelo">{{carro.modelo}}</option>
+    <select name="model" id="model" hidden>
+        <option value="">Seleciona o modelo</option>
+        {%for carro in modelos%}
+        <option value="{{carro.modelo}},{{carro.matricula}},{{carro.preco_dia}}">{{carro.modelo}}</option>
         {%endfor%}
     </select>
 
+    <div class="form-group">
+        <label for="dataInicial">Data Inícial</label>
+        <input type="date"
+               class="form-control"
+               id="dataInicial"
+               name="dataInicial"
+               placeholder="dd/mm/yyyy">
+
+    </div>
+
+    <div class="form-group" >
+        <label for="dataFinal">Data Final</label>
+        <input type="date"
+               class="form-control"
+               id="dataFinal"
+               name="dataFinal"
+               placeholder="dd/mm/yyyy">
+
+    </div>
     <br><br>
     <div align="center">
         <button type="submit" class="btn btn-primary">Marcar Reserva</button>
@@ -34,7 +52,7 @@
 
 <!--ul class="list-group list-group-flush" id="reservas">
     {%for reserva in utilizador.reservas%}
-    <li class="list-group-item">{{reserva.data}}
+    <li class="list-group-item"> A reserva do {{reserva.carro_marca}} {{reserva.carro_modelo}} foi realizada com sucesso para as datas de {{reserva.data_inicial}} a {{reserva.data_final}}
         <form method='POST' action='/eliminar/{{reserva.id}}'>
             <button type="submit" class="close" value='{{reserva.id}}' >
                 <span aria-hidden="true">&times;</span>
@@ -45,3 +63,5 @@
 </ul-->
 
 {% endblock%}
+
+

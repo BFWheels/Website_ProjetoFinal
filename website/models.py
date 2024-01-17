@@ -7,8 +7,8 @@ from sqlalchemy.sql import func
 
 class Reservas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    carro_marca = db.Column(db.String(150), db.ForeignKey('carro.marca'))
-    carro_modelo = db.Column(db.String(150), db.ForeignKey('modelo.modelo'))
+    carro_marca = db.Column(db.String(150))
+    carro_modelo = db.Column(db.String(150))
     carro_matricula = db.Column(db.String(150), db.ForeignKey('modelo.matricula'))
     date = db.Column(db.DateTime(timezone=True), default=func.now())  # usar registo temporal as reservas dos carros
     data_inicial = db.Column(db.Date())

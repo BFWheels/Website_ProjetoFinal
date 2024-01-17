@@ -52,31 +52,31 @@
     </div>
     <!-- elemento que se apresenta após login -->
     {%if utilizador.is_authenticated %}
-     <span class="nav-item" style="color: rgba(255,255,255,.5);margin-left: auto;">Bem-vindo {{utilizador.nome}}</span>
+    <span class="nav-item" style="color: rgba(255,255,255,.5);margin-left: auto;">Bem-vindo {{utilizador.nome}}</span>
     {%endif%}
 </nav>
 <!-- Este bloco de código é mensagem de flash que estara em cada route necessário
  -->
 {% with messages = get_flashed_messages(with_categories=true) %}
-    {%if messages %}
-        {%for category,message in messages%}
-            {%if category == 'erro' %}
-                <div class="alert alert-danger alert.dismissible fade show" role="alert">
-                {{message}}
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% else %}
-                <div class="alert alert-success alert.dismissible fade show" role="alert">
-                    {{message}}
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {%endif%}
-        {%endfor%}
-    {%endif%}
+{%if messages %}
+{%for category,message in messages%}
+{%if category == 'erro' %}
+<div class="alert alert-danger alert.dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% else %}
+<div class="alert alert-success alert.dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{%endif%}
+{%endfor%}
+{%endif%}
 {%endwith%}
 
 
@@ -100,5 +100,66 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"
 ></script>
+<script>
+    function getDifferenceInDays(date1, date2) {
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+  var difference_ms = Math.abs(date1_ms - date2_ms);
+  return Math.round(difference_ms / (1000 * 60 * 60 * 24));
+}
+    function precoTotal(){
+var startDate = new Date(document.getElementById("dataInicial").value);
+var endDate = new Date(document.getElementById("dataFinal").value);
+var price_day = new Date(document.getElementById("model").value);
+
+var differenceInDays = getDifferenceInDays(startDate, endDate);
+console.log(differenceInDays);
+
+
+
+
+    }
+
+
+
+
+
+
+
+    function getModel() {
+  var e = document.getElementById("car");
+  var value = e.value;
+
+  fetch("http://127.0.0.1:5000/rent-a-car", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ car: value }),
+  })
+  .then((response) => response.json())  // Extract the JSON from the response
+  .then((data) => {  // Now we can use the data
+    var modelos = document.getElementById("model");
+    for (var i = modelos.options.length - 1; i >= 1; i--) {
+      modelos.remove(i);
+      }
+    for (var i = 0; i < data.length; i++) {
+      modelos.innerHTML =
+        modelos.innerHTML +
+        ' <option value= "' + data[i].model + ',' + data[i].matricula +',' + data[i].preco_dia +'">' +
+        data[i].model +
+        "</option>";
+    }
+
+    if (modelos.hasAttribute("hidden")) {
+      modelos.removeAttribute("hidden");
+    }
+
+  });
+}
+
+</script>
+
 </body>
 </html>
