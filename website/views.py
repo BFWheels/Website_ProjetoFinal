@@ -1,13 +1,15 @@
 import datetime
 import json
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website import db
 from website.models import Reservas, Carro, Modelo
 
 dataHoje = datetime.date.today()
 dataLegal = datetime.date(dataHoje.year - 1, dataHoje.month, dataHoje.day)
+dataAmanha = datetime.date(dataHoje.year, dataHoje.month, dataHoje.day+1)
+
 
 views = Blueprint('views', __name__)
 
@@ -41,6 +43,7 @@ def modelist(marca):
 @views.route('/rent-a-car', methods=['GET', 'POST'])
 @login_required
 def get_brand():
+
     # verificar se os carros estão disponiveis
     modelos_marca = []
     carro = Carro.query.all()
@@ -66,29 +69,34 @@ def get_brand():
             modelos_marca.append(json_object)
         json_response = json.dumps(modelos_marca)
         return json_response
-    return render_template("rent-a-car.html", utilizador=current_user, carro=carro)
+    return render_template("rent-a-car.html", utilizador=current_user, carro=carro,
+                           dataHoje=dataHoje, dataAmanha=dataAmanha)
 
 
-'''@views.route('/rent-a-car/reservar', methods=['GET', 'POST'])
+@views.route('/rent-a-car/reservar', methods=['POST'])
 @login_required
 def rent_brand():
     if request.method == 'POST':
-
-        carro = request.form.get('car')
-        modelo = request.form.get('model')
+        print(request.form.get('dataInicial'))
         data_inicial = datetime.datetime.strptime(request.form.get('dataInicial'), '%Y-%m-%d').date()
         data_final = datetime.datetime.strptime(request.form.get('dataFinal'), '%Y-%m-%d').date()
-        
-        nova_reserva = Reservas(carro_marca=carro, carro_modelo=modelo, carro_matricula=reserva[2],
-                                preco_total=int(reserva[3]), data_inicial=data_inicial, data_final=data_final,
+
+        carro = request.form.get('car')
+        modelostr = request.form.get('model')
+        modelo = list(modelostr.split(","))
+        print(type(modelo))
+
+        precototal = request.form.get('preco_total')
+        nova_reserva = Reservas(carro_marca=carro, carro_modelo=modelo[0], carro_matricula=modelo[1],
+                                preco_total=precototal, data_inicial=data_inicial, data_final=data_final,
                                 utilizador_id=current_user.id)
 
         db.session.add(nova_reserva)
         db.session.commit()
         flash('Reserva criada', category='sucesso')
 
-    return redirect(url_for('views./rent-a-car'))
-'''
+    return redirect(url_for('views.get_brand'))
+
 
 @views.route('/eliminar/<id>', methods=['POST'])
 @login_required
@@ -97,4 +105,15 @@ def eliminar(id):
         Reservas.query.filter_by(id=id).delete()
         db.session.commit()
         flash('Reserva cancelada', category='sucesso')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('views.get_brand'))
+
+
+@views.route('/alterarData/<id>', methods=['GET','POST'])
+@login_required
+def alterar(id):
+
+    if request.method == 'POST':
+        Reservas.query.filter_by(id=id).delete()
+        db.session.commit()
+        flash('Reserva cancelada', category='sucesso')
+    return redirect(url_for('views.get_brand'))

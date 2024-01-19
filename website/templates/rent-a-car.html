@@ -6,11 +6,35 @@
 {% block title %}Reservas{% endblock %}
 {% block content%}
 <h1 align="center">Área de Reserva</h1>
-
 <form method="POST" action='/rent-a-car/reservar'>
+{%if dataHoje and dataAmanha%}
+    <div class="form-group">
+        <label for="dataInicial" >Data Inicial </label>
+        <input type="date"
+               class="form-control"
+               id="dataInicial"
+               name="dataInicial"
+               min="{{ dataHoje }}"
+               placeholder="dd/mm/yyyy" onchange="precoTotal()" >
+
+    </div>
+
+    <div class="form-group" >
+        <label for="dataFinal" >Data Final</label>
+        <input type="date"
+               class="form-control"
+               id="dataFinal"
+               name="dataFinal"
+               min="{{ dataAmanha}}"
+               placeholder="dd/mm/yyyy" onchange="precoTotal()" >
+
+    </div>
+{%endif%}
+
+
     <label for="model">Carro para reservar:</label>
 
-    <select name="car" id="car" onchange="getModel()">
+    <select name="car" id="car" onchange="getModel()" >
         <option>Seleciona o carro</option>
         {%for marca in carro%}
         <option value="{{marca.marca}}">{{marca.marca}}</option>
@@ -18,49 +42,46 @@
     </select>
 
 
-    <select name="model" id="model" hidden>
+    <select name="model" id="model" hidden >
         <option value="">Seleciona o modelo</option>
         {%for carro in modelos%}
         <option value="{{carro.modelo}},{{carro.matricula}},{{carro.preco_dia}}">{{carro.modelo}}</option>
         {%endfor%}
     </select>
+    <br><br>
 
-    <div class="form-group">
-        <label for="dataInicial">Data Inícial</label>
-        <input type="date"
-               class="form-control"
-               id="dataInicial"
-               name="dataInicial"
-               placeholder="dd/mm/yyyy">
 
-    </div>
-
-    <div class="form-group" >
-        <label for="dataFinal">Data Final</label>
-        <input type="date"
-               class="form-control"
-               id="dataFinal"
-               name="dataFinal"
-               placeholder="dd/mm/yyyy">
-
-    </div>
+     <div class="form-group" >
+    <h3>Preço total</h3>
+  <textarea id="preco_total" name="preco_total" rows="1" cols="20" readonly >Preço Final da reserva  </textarea>
+        </div>
+  <br>
     <br><br>
     <div align="center">
         <button type="submit" class="btn btn-primary">Marcar Reserva</button>
     </div>
-</form>
 
-<!--ul class="list-group list-group-flush" id="reservas">
-    {%for reserva in utilizador.reservas%}
-    <li class="list-group-item"> A reserva do {{reserva.carro_marca}} {{reserva.carro_modelo}} foi realizada com sucesso para as datas de {{reserva.data_inicial}} a {{reserva.data_final}}
-        <form method='POST' action='/eliminar/{{reserva.id}}'>
-            <button type="submit" class="close" value='{{reserva.id}}' >
-                <span aria-hidden="true">&times;</span>
-        </button>
-        </form>
-    </li>
-    {%endfor%}
-</ul-->
+</form>
+<ul class="list-group list-group-flush" id="reservas">
+    {% for reserva in utilizador.reservas %}
+        <li class="list-group-item">
+            A reserva do {{reserva.carro_marca}} {{reserva.carro_modelo}} foi realizada com sucesso para as datas de {{reserva.data_inicial}} a {{reserva.data_final}}
+            <div class="col-md-12 bg-light text-right">
+                <form method='POST' action='/eliminar/{{ reserva.id }}' class="d-inline-block">
+                    <button type="submit" class="btn btn-primary" value='{{ reserva.id }}'>
+                        Cancelar
+                    </button>
+                </form>
+                <form method='POST' action='/eliminar/{{ reserva.id }}' class="d-inline-block ml-2">
+                    <button type="submit" class="btn btn-primary" value='{{ reserva.id }}'>
+                        Alterar datas
+                    </button>
+                </form>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
 
 {% endblock%}
 

@@ -100,35 +100,13 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"
 ></script>
+
 <script>
-    function getDifferenceInDays(date1, date2) {
-  var date1_ms = date1.getTime();
-  var date2_ms = date2.getTime();
-  var difference_ms = Math.abs(date1_ms - date2_ms);
-  return Math.round(difference_ms / (1000 * 60 * 60 * 24));
-}
-    function precoTotal(){
-var startDate = new Date(document.getElementById("dataInicial").value);
-var endDate = new Date(document.getElementById("dataFinal").value);
-var price_day = new Date(document.getElementById("model").value);
-
-var differenceInDays = getDifferenceInDays(startDate, endDate);
-console.log(differenceInDays);
-
-
-
-
-    }
-
-
-
-
-
-
 
     function getModel() {
   var e = document.getElementById("car");
   var value = e.value;
+
 
   fetch("http://127.0.0.1:5000/rent-a-car", {
     method: "POST",
@@ -138,8 +116,8 @@ console.log(differenceInDays);
     },
     body: JSON.stringify({ car: value }),
   })
-  .then((response) => response.json())  // Extract the JSON from the response
-  .then((data) => {  // Now we can use the data
+  .then((response) => response.json())
+  .then((data) => {
     var modelos = document.getElementById("model");
     for (var i = modelos.options.length - 1; i >= 1; i--) {
       modelos.remove(i);
@@ -155,9 +133,43 @@ console.log(differenceInDays);
     if (modelos.hasAttribute("hidden")) {
       modelos.removeAttribute("hidden");
     }
+      precoTotal();
 
   });
 }
+
+        function getDifferenceInDays(date1, date2) {
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+  var difference_ms = Math.abs(date2_ms - date1_ms);
+  return Math.round(difference_ms / (1000 * 60 * 60 * 24));
+}
+
+document.getElementById("model").onchange = function() {
+    precoTotal();
+};
+
+
+
+    function precoTotal(){
+var startDate = new Date(document.getElementById("dataInicial").value);
+var endDate = new Date(document.getElementById("dataFinal").value);
+var parts = document.getElementById("model").value;
+var partsSplit = parts.split(",");
+var price_day = partsSplit[2];
+
+var differenceInDays = getDifferenceInDays(startDate, endDate);
+var preco_total = differenceInDays*price_day
+
+if (!isNaN(preco_total)) {
+document.getElementById("preco_total").value = preco_total + " €";
+} else {
+        document.getElementById("preco_total").value = "Preço Final da reserva "
+        }
+
+    }
+
+
 
 </script>
 
