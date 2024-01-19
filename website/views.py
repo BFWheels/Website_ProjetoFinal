@@ -33,8 +33,10 @@ def carlist():
 @views.route('/carList/<marca>', methods=['GET'])
 @login_required
 def modelist(marca):
+
     modelo = Modelo.query.filter_by(marca_carro=marca).all()
-    return render_template("carList.html", utilizador=current_user, modelo=modelo)
+    marca = "http://127.0.0.1:5000/carList"
+    return render_template("carList.html", utilizador=current_user, modelo=modelo, marca=marca)
 
 
 # Routes para reservas
@@ -50,9 +52,13 @@ def get_brand():
     modelos_antes = Modelo.query.all()
     for modelo in modelos_antes:
         reserva = Reservas.query.filter_by(carro_matricula=modelo.matricula).first()
+        concluida = Reservas.query.filter(Reservas.data_final<dataHoje, Reservas.carro_matricula == modelo.matricula).all()
+
         if reserva or dataHoje > modelo.data_proxima_revisao or dataLegal > modelo.data_ultima_legalizacao:
             modelo.disponivel = 0
         else:
+            modelo.disponivel = 1
+        if concluida:
             modelo.disponivel = 1
     db.session.commit()
 
@@ -77,23 +83,40 @@ def get_brand():
 @login_required
 def rent_brand():
     if request.method == 'POST':
-        print(request.form.get('dataInicial'))
-        data_inicial = datetime.datetime.strptime(request.form.get('dataInicial'), '%Y-%m-%d').date()
-        data_final = datetime.datetime.strptime(request.form.get('dataFinal'), '%Y-%m-%d').date()
+        data_inicial = ""
+        data_final = ""
+        try:
+            data_inicial = datetime.datetime.strptime(request.form.get('dataInicial'), '%Y-%m-%d').date()
+
+        except ValueError:
+            flash('tem que haver 2 datas selecionadas', category='erro')
+        else:
+
+            try:
+                data_final = datetime.datetime.strptime(request.form.get('dataFinal'), '%Y-%m-%d').date()
+            except ValueError:
+                flash('tem que haver 2 datas selecionadas', category='erro')
 
         carro = request.form.get('car')
         modelostr = request.form.get('model')
         modelo = list(modelostr.split(","))
-        print(type(modelo))
-
         precototal = request.form.get('preco_total')
-        nova_reserva = Reservas(carro_marca=carro, carro_modelo=modelo[0], carro_matricula=modelo[1],
-                                preco_total=precototal, data_inicial=data_inicial, data_final=data_final,
-                                utilizador_id=current_user.id)
+        if data_inicial == "" or data_final == "":
+            print("")
+        elif data_inicial >= data_final:
+            flash('a data de inicio não pode ser maior que a data final', category='erro')
+        elif carro == "":
+            flash('Seleciona uma marca', category='erro')
+        elif modelo == "":
+            flash('Seleciona um modelo', category='erro')
+        else:
+            nova_reserva = Reservas(carro_marca=carro, carro_modelo=modelo[0], carro_matricula=modelo[1],
+                                    preco_total=precototal, data_inicial=data_inicial, data_final=data_final,
+                                    utilizador_id=current_user.id)
 
-        db.session.add(nova_reserva)
-        db.session.commit()
-        flash('Reserva criada', category='sucesso')
+            db.session.add(nova_reserva)
+            db.session.commit()
+            flash('Reserva criada', category='sucesso')
 
     return redirect(url_for('views.get_brand'))
 
@@ -102,18 +125,45 @@ def rent_brand():
 @login_required
 def eliminar(id):
     if request.method == 'POST':
-        Reservas.query.filter_by(id=id).delete()
-        db.session.commit()
+        if Reservas.utilizador_id == current_user.id:
+            Reservas.query.filter_by(id=id).delete()
+            db.session.commit()
         flash('Reserva cancelada', category='sucesso')
     return redirect(url_for('views.get_brand'))
 
 
-@views.route('/alterarData/<id>', methods=['GET','POST'])
+@views.route('/alterar-datas', methods=['GET', 'POST'])
 @login_required
-def alterar(id):
+def alterar():
+    id = request.form.get('id')
 
-    if request.method == 'POST':
-        Reservas.query.filter_by(id=id).delete()
+    return render_template("alterar-datas.html", utilizador=current_user,id=id,dataHoje=dataHoje, dataAmanha=dataAmanha)
+
+
+@views.route('/alterar-datas/<id>', methods=['POST'])
+@login_required
+def alterar_data(id):
+    data_inicial_alterada = ""
+    data_final_alterada = ""
+    try:
+        data_inicial_alterada = datetime.datetime.strptime(request.form.get('nova_dataInicial'), '%Y-%m-%d').date()
+
+    except ValueError:
+        flash('tens que ter a data inicial adicionada', category='erro')
+    else:
+
+        try:
+            data_final_alterada = datetime.datetime.strptime(request.form.get('nova_dataFinal'), '%Y-%m-%d').date()
+        except ValueError:
+            flash('tens que ter a data final adicionada', category='erro')
+    if data_inicial_alterada == "" or data_final_alterada == "":
+        print()
+    elif data_inicial_alterada >= data_final_alterada:
+        flash('a data de inicio não pode ser maior que a data final', category='erro')
+    else:
+        reserva = Reservas.query.filter_by(id=id).first()
+        reserva.data_inicial = data_inicial_alterada
+        reserva.data_final = data_final_alterada
         db.session.commit()
-        flash('Reserva cancelada', category='sucesso')
+        flash('Data alterada', category='sucesso')
     return redirect(url_for('views.get_brand'))

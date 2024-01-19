@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee7d4d02-8137-480d-b960-55c7deb4e782" name="Changes" comment="Add models filtered by brand">
+    <list default="true" id="ee7d4d02-8137-480d-b960-55c7deb4e782" name="Changes" comment="Alteração para reservas de carros">
+      <change afterPath="$PROJECT_DIR$/website/templates/alterar-datas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_01_2024_14_29__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_01_2024_14_29__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/carList.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/carList.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/templates/rent-a-car.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/rent-a-car.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
     </list>
@@ -16,14 +19,35 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "BFWheels"
+  }
+}]]></component>
   <component name="GithubProjectSettings">
     <option name="branchProtectionPatterns">
       <list>
         <option value="master" />
       </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="1fc92861-31d0-47e9-b671-c65e8c125a09" />
+        <option name="url" value="https://github.com/BFWheels/Website_ProjetoFinal.git" />
+      </UrlAndAccount>
     </option>
   </component>
   <component name="ProjectColorInfo">{
@@ -36,17 +60,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.webscrape.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/35196/PycharmProjects/Website_ProjetoFinal/website/templates"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\35196\PycharmProjects\Website_ProjetoFinal\website\templates" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Website_ProjetoFinal" />
@@ -79,7 +107,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+        <option value="bundled-python-sdk-7a29c1521ef0-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.11799.298" />
       </set>
     </attachedChunks>
   </component>
@@ -110,37 +138,21 @@
     </task>
     <task id="LOCAL-00003" summary="Apagar notas(todas de uma vez)">
       <option name="closed" value="true" />
-      <created>1704764161283</created>
+      <created>1704738631847</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1704764161283</updated>
+      <updated>1704738631847</updated>
     </task>
-    <task id="LOCAL-00004" summary="View brands and models&#10;Add models table and values">
+    <task id="LOCAL-00004" summary="Alteração para reservas de carros">
       <option name="closed" value="true" />
-      <created>1705331201424</created>
+      <created>1704917068058</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1705331201424</updated>
+      <updated>1704917068058</updated>
     </task>
-    <task id="LOCAL-00005" summary="View brands and models&#10;Add models table and values">
-      <option name="closed" value="true" />
-      <created>1705344302559</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1705344302559</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Add models filtered by brand">
-      <option name="closed" value="true" />
-      <created>1705458795053</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1705458795053</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,7 +160,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -156,8 +180,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Apagar notas(todas de uma vez)" />
-    <MESSAGE value="View brands and models&#10;Add models table and values" />
-    <MESSAGE value="Add models filtered by brand" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add models filtered by brand" />
+    <MESSAGE value="Alteração para reservas de carros" />
+    <option name="LAST_COMMIT_MESSAGE" value="Alteração para reservas de carros" />
   </component>
 </project>

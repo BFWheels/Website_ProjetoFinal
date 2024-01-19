@@ -44,35 +44,39 @@ def sign_up():
         nome = request.form.get('nome')
         apelido = request.form.get('apelido')
         datanascimento = request.form.get('dataNascimento')
-        nascimento = datetime.datetime.strptime(datanascimento, '%Y-%m-%d').date()
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
-        utilizador = Utilizador.query.filter_by(email=email).first()
-        if utilizador:
-            flash('O email já existe, vai para o login', category='erro')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='erro')
-        elif len(nome) < 2:
-            flash('O nome tem que ter pelo menos duas letras.', category='erro')
-        elif len(apelido) < 2:
-            flash('O apelido tem que ter pelo menos duas letras.', category='erro')
-        elif nascimento > maiorIdade:
-            flash('a idade tem que ser superior a 18 anos', category='erro')
-        elif password1 != password2:
-            flash('A password não coíncide ', category='erro')
-        elif len(password1) < 7:
-            flash('A password tem que ter pelo menos 7 caractéres.', category='erro')
-        elif any(char.isupper() for char in password1) < 1:
-            flash('A password deve conter pelo menos uma letra maiúscula!', category='erro')
-        elif any(not char.isalnum() for char in password1) < 1:
-            flash('A password deve conter pelo menos um caracter especial!', category='erro')
-        else:
-            novo_utilizador = Utilizador(email=email, nome=nome, apelido=apelido, datanascimento=nascimento, password=generate_password_hash(password1, method='scrypt'))
-            db.session.add(novo_utilizador)
-            db.session.commit()
-            login_user(novo_utilizador, remember=True)
-            flash('A conta foi criada com sucesso', category='sucesso')
+        try:
+            nascimento = datetime.datetime.strptime(datanascimento, '%Y-%m-%d').date()
+        except ValueError:
+            flash('tem que haver data de nascimento', category='erro')
+        finally:
+            password1 = request.form.get('password1')
+            password2 = request.form.get('password2')
+            utilizador = Utilizador.query.filter_by(email=email).first()
+            if utilizador:
+                flash('O email já existe, vai para o login', category='erro')
+            elif len(email) < 4:
+                flash('Email tem que ter mais que 3 caractéres.', category='erro')
+            elif len(nome) < 2:
+                flash('O nome tem que ter pelo menos duas letras.', category='erro')
+            elif len(apelido) < 2:
+                flash('O apelido tem que ter pelo menos duas letras.', category='erro')
+            elif nascimento > maiorIdade:
+                flash('a idade tem que ser superior a 18 anos', category='erro')
+            elif password1 != password2:
+                flash('A password não coíncide ', category='erro')
+            elif len(password1) < 7:
+                flash('A password tem que ter pelo menos 7 caractéres.', category='erro')
+            elif any(char.isupper() for char in password1) < 1:
+                flash('A password deve conter pelo menos uma letra maiúscula!', category='erro')
+            elif any(not char.isalnum() for char in password1) < 1:
+                flash('A password deve conter pelo menos um caracter especial!', category='erro')
+            else:
+                novo_utilizador = Utilizador(email=email, nome=nome, apelido=apelido, datanascimento=nascimento, password=generate_password_hash(password1, method='scrypt'))
+                db.session.add(novo_utilizador)
+                db.session.commit()
+                login_user(novo_utilizador, remember=True)
+                flash('A conta foi criada com sucesso', category='sucesso')
 
-            return redirect(url_for('views.home'))
+                return redirect(url_for('views.home'))
 
     return render_template("sign_up.html", utilizador=current_user)

@@ -1,0 +1,40 @@
+
+{%extends "base.html"%} <!-- herança da página base -->
+
+{% block title %}CarList{% endblock %}
+{% block content%}
+
+<h1 align="center">Frota da empresa</h1>
+
+
+
+<form method="POST" action="alterar-datas/{{id}}">
+{%if dataHoje and dataAmanha%}
+
+    <div class="form-group">
+        <label for="nova_dataInicial" >Data Inicial </label>
+        <input type="date"
+               class="form-control"
+               id="nova_dataInicial"
+               name="nova_dataInicial"
+               min="{{ dataHoje }}"
+               placeholder="dd/mm/yyyy" onchange="precoTotal()">
+    </div>
+    <div class="form-group" >
+        <label for="nova_dataFinal" >Data Final</label>
+        <input type="date"
+               class="form-control"
+               id="nova_dataFinal"
+               name="nova_dataFinal"
+               min="{{ dataAmanha}}"
+               placeholder="dd/mm/yyyy" onchange="precoTotal()">
+    </div>
+
+
+
+            <a href="/rent-a-car" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
+
+    {%endif%}
+<button type="submit" class="btn btn-primary justify-content-between">Alterar datas</button>
+</form>
+{% endblock%}
