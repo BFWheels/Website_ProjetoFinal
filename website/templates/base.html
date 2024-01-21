@@ -169,9 +169,22 @@ document.getElementById("preco_total").value = preco_total + " €";
 
     }
 
+function mostrarCaixaIban() {
+            var metodoPagamento = document.getElementById("pagamento").value;
+            var Iban = document.getElementById("IBAN");
 
+            if (metodoPagamento == "Debito_direto") {
+                Iban.style.display = "block";
+            } else {
+                Iban.style.display = "none";
+            }
+        }
 
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
 </script>
-
 </body>
 </html>

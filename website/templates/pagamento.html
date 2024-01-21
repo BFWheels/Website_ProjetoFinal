@@ -1,0 +1,41 @@
+{%extends "base.html"%} <!-- herança da página base -->
+
+{% block title %}Pagamento{% endblock %}
+{% block content%}
+
+<h1 align="center">Pagamento</h1>
+
+<div class="bg-light d-inline">
+        <h6> A reserva do {{carro}} {{modelo}} entre {{dataInicial}} e {{dataFinal}} tem um valor de {{precoTotal}}</h6>
+            </div>
+<br><br>
+
+
+<form method="POST" action="/pagamento">
+
+
+
+    <select name="pagamento" id="pagamento" onchange="mostrarCaixaIban()">
+        <option value="">Seleciona o modelo</option>
+        <option value="Multibanco">Multibanco</option>
+        <option value="Debito_direto">Debito direto</option>
+        <option value="Transferência">Transferência Bancária</option>
+    </select>
+<br><br>
+
+     <div id="IBAN" style="display: none">
+            <label for="iban">PT50</label>
+            <input type="text" name="iban" id="iban">
+        </div>
+
+<br><br>
+<br><br>
+<div>
+    <a href="/rent-a-car" class="btn btn-primary justify-content-between">Voltar</a>
+
+
+    <button type="submit" class="btn btn-primary text-right justify-content-between">Fazer Pagamento</button>
+
+    </div>
+</form>
+{% endblock%}

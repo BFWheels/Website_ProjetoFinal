@@ -9,7 +9,7 @@
 
 
 <form method="POST" action="alterar-datas/{{id}}">
-{%if dataHoje and dataAmanha%}
+    {%if dataHoje and dataAmanha%}
 
     <div class="form-group">
         <label for="nova_dataInicial" >Data Inicial </label>
@@ -31,10 +31,10 @@
     </div>
 
 
-
-            <a href="/rent-a-car" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
-
+    <div class="d-inline">
+        <a href="/rent-a-car" type="submit" class="btn btn-primary ">Voltar</a>
+        <button type="submit" class="btn btn-primary ">Alterar datas</button>
+    </div>
     {%endif%}
-<button type="submit" class="btn btn-primary justify-content-between">Alterar datas</button>
 </form>
 {% endblock%}
