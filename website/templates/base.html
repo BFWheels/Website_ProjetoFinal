@@ -23,7 +23,7 @@
 .grid-container {
   display: grid;
     justify-content: space-between;
-  grid-template-columns: auto auto auto;
+grid-template-columns: repeat(3, minmax(200px, 1fr));
   gap: 20px;
 
   padding: 10px;
@@ -32,6 +32,15 @@
 .grid-container > div {
   font-size: 50px;
 }
+         .grid-item {
+        text-align: center;
+    }
+
+    .grid-item img {
+        max-width: 100%;
+        max-height: 100%;
+        background-color: transparent;
+    }
 
 </style>
 

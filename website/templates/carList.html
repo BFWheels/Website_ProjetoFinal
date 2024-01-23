@@ -4,14 +4,19 @@
 {% block title %}CarList{% endblock %}
 {% block content%}
 
-<h1 align="center">Área de Reserva</h1>
 
- <img src="file:///C:/Users/35191/PycharmProjects/Website_ProjetoFinal/website/images/Seat.jpg" alt="Teste">
+<h1 align="center">Veículos para reserva</h1>
+
+
+
+
+
+
 <div class="grid-container">
     {%for marca in carro%}
 
     <div class="grid-item">
-        <img src="./images/Seat.png" alt="{{marca.marca}}">
+        <img src="{{ url_for('static', filename='images/' + marca.marca + '.png') }}" alt="{{ marca.marca }}">
         <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}"><h4>{{marca.marca}}</h4></a></div>
     {%endfor%}
 </div>
