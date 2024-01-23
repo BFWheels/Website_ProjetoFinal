@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee7d4d02-8137-480d-b960-55c7deb4e782" name="Changes" comment="adição imagem">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Alfa Romeo.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Alfa Romeo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Dacia.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Dacia.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Ford.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Ford.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Hyundai.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Hyundai.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Opel.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Opel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Peugeot.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Peugeot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Renault.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Renault.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Seat.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Seat.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Seat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/static/images/Volkswagen.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Volkswagen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/carList.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/carList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/rent-a-car.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/rent-a-car.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706013794421</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="adição imagem">
+      <option name="closed" value="true" />
+      <created>1706033832033</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706033832033</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
