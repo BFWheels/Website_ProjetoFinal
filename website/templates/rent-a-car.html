@@ -63,10 +63,12 @@
         {% for reserva in utilizador.reservas %}
         {%if reserva.pagamento==1%}
         <li class="list-group-item" style="
-    border-bottom-width: 0;">
-            <div class="bg-light m-0 d-flex justify-content-between" >
+    border-bottom-width: 0;background-color: transparent;">
+            <div class="bg-light m-0 d-flex justify-content-between "  >
                 <div class="bg-light d-inline">
+                    <h6>
                     A sua reserva com {{reserva.carro_marca}} {{reserva.carro_modelo}} está feita entre os dias {{reserva.data_inicial}} a {{reserva.data_final}} com o valor de {{reserva.preco_total}}€
+               </h6>
                 </div>
 
                 <div class="text-right d-inline">

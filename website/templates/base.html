@@ -20,12 +20,21 @@
     />
     <style>
 
+
+        body{
+    background-image: url({{ url_for('static', filename='images/BackGround.jpg') }});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+
+}
+
 .grid-container {
   display: grid;
     justify-content: space-between;
 grid-template-columns: repeat(3, minmax(200px, 1fr));
   gap: 20px;
-
   padding: 10px;
 }
 
@@ -34,6 +43,7 @@ grid-template-columns: repeat(3, minmax(200px, 1fr));
 }
          .grid-item {
         text-align: center;
+        margin-top:auto;
     }
 
     .grid-item img {
@@ -41,6 +51,7 @@ grid-template-columns: repeat(3, minmax(200px, 1fr));
         max-height: 100%;
         background-color: transparent;
     }
+
 
 </style>
 

@@ -4,17 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee7d4d02-8137-480d-b960-55c7deb4e782" name="Changes" comment="Alteração para reservas de carros">
-      <change beforePath="$PROJECT_DIR$/.idea/Website_ProjetoFinal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Website_ProjetoFinal.iml" afterDir="false" />
+    <list default="true" id="ee7d4d02-8137-480d-b960-55c7deb4e782" name="Changes" comment="adição imagem">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/alterar-datas.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/alterar-datas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Alfa Romeo.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Alfa Romeo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Dacia.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Dacia.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Ford.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Ford.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Hyundai.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Hyundai.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Opel.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Opel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Peugeot.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Peugeot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Renault.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Renault.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Seat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Seat.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Seat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/images/Volkswagen.png" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/images/Volkswagen.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/templates/carList.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/carList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/pagamento.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/pagamento.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/templates/rent-a-car.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/rent-a-car.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +163,31 @@
       <option name="project" value="LOCAL" />
       <updated>1704917068058</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adição imagem">
+      <option name="closed" value="true" />
+      <created>1706013604625</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706013604625</updated>
+    </task>
+    <task id="LOCAL-00006" summary="adição imagem">
+      <option name="closed" value="true" />
+      <created>1706013676152</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706013676152</updated>
+    </task>
+    <task id="LOCAL-00007" summary="adição imagem">
+      <option name="closed" value="true" />
+      <created>1706013794421</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706013794421</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,6 +216,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Apagar notas(todas de uma vez)" />
     <MESSAGE value="Alteração para reservas de carros" />
-    <option name="LAST_COMMIT_MESSAGE" value="Alteração para reservas de carros" />
+    <MESSAGE value="adição imagem" />
+    <option name="LAST_COMMIT_MESSAGE" value="adição imagem" />
   </component>
 </project>

@@ -16,8 +16,9 @@
     {%for marca in carro%}
 
     <div class="grid-item">
+        <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}">
         <img src="{{ url_for('static', filename='images/' + marca.marca + '.png') }}" alt="{{ marca.marca }}">
-        <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}"><h4>{{marca.marca}}</h4></a></div>
+        </a></div>
     {%endfor%}
 </div>
 
