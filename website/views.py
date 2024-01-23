@@ -1,16 +1,13 @@
 import datetime
 import json
-
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website import db
 from website.models import Reservas, Carro, Modelo
-
 dataHoje = datetime.date.today()
 doisDias = datetime.date(dataHoje.year, dataHoje.month, dataHoje.day - 2)
 dataLegal = datetime.date(dataHoje.year - 1, dataHoje.month, dataHoje.day)
 dataAmanha = datetime.date(dataHoje.year, dataHoje.month, dataHoje.day + 1)
-
 views = Blueprint('views', __name__)
 
 
@@ -50,7 +47,6 @@ def get_brand():
     modelos_antes = Modelo.query.all()
     for modelo in modelos_antes:
         reserva = Reservas.query.filter_by(carro_matricula=modelo.matricula).first()
-
         concluida = Reservas.query.filter(Reservas.data_final <
                                           dataHoje, Reservas.carro_matricula == modelo.matricula).all()
         if reserva and reserva.pagamento == 0 and reserva.date.day < doisDias.day:
@@ -61,9 +57,7 @@ def get_brand():
             modelo.disponivel = 1
         else:
             modelo.disponivel = 1
-
     db.session.commit()
-
     if request.method == 'POST':
         carro_json = request.get_json()
         carro = carro_json['car']
@@ -104,7 +98,7 @@ def rent_brand():
                 return redirect(url_for('views.get_brand'))
             else:
                 nova_reserva = Reservas(carro_marca=carro, carro_modelo=modelo[0], carro_matricula=modelo[1],
-                                        preco_total=precototal, data_inicial=data_inicial, data_final=data_final,
+                                        preco_total=precototal, divida=precototal, data_inicial=data_inicial, data_final=data_final,
                                         utilizador_id=current_user.id)
                 db.session.add(nova_reserva)
                 db.session.commit()
@@ -112,7 +106,6 @@ def rent_brand():
                 return redirect(url_for('views.pagamento', id=nova_reserva.id))
         except ValueError:
             flash(f'Erro ao criar reserva: tens que ter 2 datas preenchidas', category='erro')
-
     return redirect(url_for('views.get_brand'))
 
 
@@ -143,11 +136,9 @@ def alterar_data(id):
     data_final_alterada = ""
     try:
         data_inicial_alterada = datetime.datetime.strptime(request.form.get('nova_dataInicial'), '%Y-%m-%d').date()
-
     except ValueError:
         flash('tens que ter a data inicial adicionada', category='erro')
     else:
-
         try:
             data_final_alterada = datetime.datetime.strptime(request.form.get('nova_dataFinal'), '%Y-%m-%d').date()
         except ValueError:
@@ -156,27 +147,67 @@ def alterar_data(id):
         flash('a data de inicio não pode ser maior que a data final', category='erro')
     else:
         reserva = Reservas.query.filter_by(id=id).first()
+        print(reserva)
         modelo = Modelo.query.filter_by(matricula=reserva.carro_matricula).first()
         reserva.data_inicial = data_inicial_alterada
         reserva.data_final = data_final_alterada
         precototal_novo = int(abs(data_final_alterada.day - data_inicial_alterada.day) * modelo.preco_dia)
-        preco_antigostr = reserva.preco_total.split('€')
-        preco_antigo = int(preco_antigostr[0])
-        if reserva.pagamento == 1:
-            if preco_antigo < precototal_novo:
+        preco_antigo = int(reserva.preco_total)
+        if preco_antigo < precototal_novo:
+            if reserva.pagamento == 1:
                 divida_restante = precototal_novo - preco_antigo
-                reserva.preco_total = f'{divida_restante} €'
-                reserva.pagamento = 0
-                reserva.date = dataHoje
-                db.session.commit()
-                flash('Data alterada, a reserva ficou pendente para novo pagamento', category='sucesso')
-            elif preco_antigo > precototal_novo:
+            else:
+                if reserva.divida == preco_antigo:
+                    divida_restante = precototal_novo
+                else:
+                    divida_restante = abs(int(reserva.divida) + abs(preco_antigo-precototal_novo))
+            reserva.divida = f'{divida_restante}'
+            reserva.pagamento = 0
+            reserva.date = dataHoje
+            reserva.preco_total = f'{precototal_novo}'
+            db.session.commit()
+            flash(f'Data alterada, a reserva ficou pendente para novo pagamento de{reserva.divida} € ', category='sucesso')
+        elif preco_antigo > precototal_novo:
+            if reserva.pagamento == 1:
                 excesso = preco_antigo - precototal_novo
-                reserva.preco_total = f'{precototal_novo} €'
+                reserva.preco_total = f'{precototal_novo}'
                 db.session.commit()
                 flash(f'Data alterada,vai ser creditado {excesso} € ', category='sucesso')
+            else:
+                if reserva.divida == preco_antigo:
+                    divida_restante = precototal_novo
+                    reserva.divida = f'{divida_restante}'
+                    reserva.pagamento = 0
+                    reserva.date = dataHoje
+                    reserva.preco_total = f'{precototal_novo}'
+                    db.session.commit()
+                    flash(f'Data alterada, novo valor é {precototal_novo} € ', category='sucesso')
+                else:
+                    divida_restante = int(reserva.divida) - abs(preco_antigo - precototal_novo)
+                    if divida_restante == 0:
+                        reserva.divida = f'{divida_restante}'
+                        reserva.pagamento = 1
+                        reserva.date = dataHoje
+                        reserva.preco_total = f'{precototal_novo}'
+                        db.session.commit()
+                    elif divida_restante < 0:
+                        excesso = -divida_restante
+                        reserva.divida = 0
+                        reserva.pagamento = 1
+                        reserva.date = dataHoje
+                        reserva.preco_total = f'{precototal_novo}'
+                        db.session.commit()
+                        flash(f'Data alterada,vai ser creditado {excesso} € ', category='sucesso')
+                    else:
+                        reserva.divida = f'{divida_restante}'
+                        reserva.pagamento = 0
+                        reserva.date = dataHoje
+                        reserva.preco_total = f'{precototal_novo}'
+                        db.session.commit()
+                flash(f'Data alterada, novo valor é {precototal_novo} € ', category='sucesso')
         else:
             reserva.preco_total = f'{precototal_novo} €'
+            reserva.divida = int(reserva.preco_total)
             db.session.commit()
             flash('Data alterada', category='sucesso')
     return redirect(url_for('views.get_brand'))
@@ -185,10 +216,11 @@ def alterar_data(id):
 @views.route('/pagamento', methods=['GET', 'POST'])
 @login_required
 def pagamento():
-    id = request.form.get('id')
+    if request.method == 'POST':
+        id = request.form.get('id')
+    else:
+        id=request.args.get('id')
     reserva = Reservas.query.filter_by(id=id, utilizador_id=current_user.id).first()
-    print(reserva)
-
     carro = reserva.carro_marca
     modelo = reserva.carro_modelo
     precototal = reserva.preco_total
@@ -197,24 +229,29 @@ def pagamento():
     tipo_pagamento = request.form.get('pagamento')
     if request.method == "POST":
         if tipo_pagamento == "Multibanco":
-            flash("foi enviado para o seu email uma entidade e referência para completar o pagamento da reserva",
+            flash(f"foi enviado para o seu email uma entidade e referência"
+                  f" para completar o pagamento da reserva com o valor de {reserva.divida} €",
                   category='sucesso')
             reserva.pagamento = 1
+            reserva.divida = 0
             db.session.commit()
             return redirect(url_for('views.get_brand'))
         elif tipo_pagamento == "Transferência":
-            flash("foi enviado para o seu email O IBAN para completar o pagamento da reserva", category='sucesso')
+            flash(f"foi enviado para o seu email O IBAN para completar o pagamento da "
+                  f"reserva com o valor de {reserva.divida} €", category='sucesso')
             reserva.pagamento = 1
+            reserva.divida = 0
             db.session.commit()
             return redirect(url_for('views.get_brand'))
         elif tipo_pagamento == "Debito_direto":
-            flash("Iremos debitar o valor para a completar o pagamento da reserva", category='sucesso')
+            flash(f"Iremos debitar o valor para a completar o pagamento"
+                  f" da reserva com o valor de {reserva.divida} €", category='sucesso')
             reserva.pagamento = 1
+            reserva.divida = 0
             db.session.commit()
             return redirect(url_for('views.get_brand'))
         else:
             flash("Escolha um metodo de pagamento", category='erro')
-
     return render_template("pagamento.html", utilizador=current_user,
                            carro=carro, modelo=modelo, precoTotal=precototal, dataInicial=data_inicial,
                            dataFinal=data_final, id=id)

@@ -18,6 +18,22 @@
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             crossorigin="anonymous"
     />
+    <style>
+
+.grid-container {
+  display: grid;
+    justify-content: space-between;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
+
+  padding: 10px;
+}
+
+.grid-container > div {
+  font-size: 50px;
+}
+
+</style>
 
     <title>{% block title %} Blank {% endblock %}</title>
 </head>
@@ -162,7 +178,7 @@ var differenceInDays = getDifferenceInDays(startDate, endDate);
 var preco_total = differenceInDays*price_day
 
 if (!isNaN(preco_total)) {
-document.getElementById("preco_total").value = preco_total + " €";
+document.getElementById("preco_total").value = preco_total;
 } else {
         document.getElementById("preco_total").value = "Preço Final da reserva "
         }

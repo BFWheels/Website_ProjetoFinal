@@ -6,14 +6,17 @@
 <h1 align="center">Pagamento</h1>
 
 <div class="bg-light d-inline">
-        <h6> A reserva do {{carro}} {{modelo}} entre {{dataInicial}} e {{dataFinal}} tem um valor de {{precoTotal}}</h6>
+        <h6> A reserva do {{carro}} {{modelo}} entre {{dataInicial}} e {{dataFinal}} tem um valor de {{precoTotal}} €</h6>
             </div>
 <br><br>
 
 
 <form method="POST" action="/pagamento">
 
-
+     <input type="text"
+       class="form-control"
+      id="id"
+      name="id" value="{{id}}" hidden>
 
     <select name="pagamento" id="pagamento" onchange="mostrarCaixaIban()">
         <option value="">Seleciona o modelo</option>

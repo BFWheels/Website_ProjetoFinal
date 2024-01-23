@@ -1,42 +1,46 @@
 
 {%extends "base.html"%} <!-- herança da página base -->
 
-{% block title %}ChangeDate{% endblock %}
+{% block title %}CarList{% endblock %}
 {% block content%}
 
 <h1 align="center">Área de Reserva</h1>
 
-<ul class="list-group list-group-flush" id="carlist">
+ <img src="file:///C:/Users/35191/PycharmProjects/Website_ProjetoFinal/website/images/Seat.jpg" alt="Teste">
+<div class="grid-container">
     {%for marca in carro%}
-    <li class="list-group-item border-bottom-0">
 
-        <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}"><h4>{{marca.marca}}</h4></a>
-        <!-- imagem com marca_veiculo e tenho que pôr o path no statcis(../statics/imagem.png)-->
-    </li>
+    <div class="grid-item">
+        <img src="file:///C:/Users/35191/PycharmProjects/Website_ProjetoFinal/website/images/Seat.PNG.png" alt="{{marca.marca}}">
+        <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}"><h4>{{marca.marca}}</h4></a></div>
     {%endfor%}
-</ul>
+</div>
 
 <form method="get" action="carList/{{marca}}">
     {%if (url !=marca)%}
-    <ul class="list-group list-group-flush" id="modelList">
+   <div class="grid-container">
 
         {%for veiculo in modelo%}
 
-        <li class="list-group-item border-bottom-0">
+        <div class="item">
             <h5> Marca: {{veiculo.marca_carro}} <br>
                 Modelo: {{veiculo.modelo}} <br>
                 Combustível: {{veiculo.combustivel}} <br>
                 Nº de passageiros: {{veiculo.lugares}}
             </h5>
-
+        </div>
 
         {%endfor%}
 
 
-            <a href="/carList" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
-        </li>
 
-    </ul>
-    {%endif%}
+
+
+    </div>
+
 </form>
+<div>
+<a href="/carList" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
+    </div>
+    {%endif%}
 {% endblock%}

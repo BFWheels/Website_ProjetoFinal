@@ -14,6 +14,7 @@ class Reservas(db.Model):
     data_inicial = db.Column(db.Date())
     data_final = db.Column(db.Date())
     preco_total = db.Column(db.Integer)
+    divida = db.Column(db.Integer)
     pagamento = db.Column(db.Integer, default=0)
     utilizador_id = db.Column(db.Integer, db.ForeignKey('utilizador.id'))  # usar este codigo para definir reservas
 
