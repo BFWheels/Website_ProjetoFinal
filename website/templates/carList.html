@@ -6,25 +6,72 @@
 
 
 <h1 align="center">Veículos para reserva</h1>
+{%if (url ==lista_marca)%}
+<h3>Pesquisa Avançada</h3>
+<div>
+    <form method="post" action="{{ url_for('views.pesquisa') }}">
+        <select name="combustivel" id="combustivel">
+            <option value="">Pesquisa por tipo de combustivel</option>
+            {%for tipo in combustivel%}
+            <option value="{{tipo}}">{{tipo}}</option>
+            {%endfor%}
+        </select>
+
+        <select name="lugares" id="lugares">
+            <option value="">Pesquisa por nº de passageiros</option>
+            {%for passageiros in lugares%}
+            <option value="{{passageiros}}">{{passageiros}}</option>
+            {%endfor%}
+        </select>
+
+        <select name="diaria" id="diaria">
+            <option value="">Pesquisa por preço diário</option>
+            {%for diaria in precodia%}
+            <option value="{{diaria}}">{{diaria}}</option>
+            {%endfor%}
+        </select>
 
 
+        <button type="submit" class="btn btn-primary"> Pesquisa</button>
 
+        {% if (url != pesquisar) %}
+        <div class="grid-container">
 
+            {%for veiculo in pesquisa%}
 
+            <div class="item">
+                <h5> Marca: {{veiculo.marca_carro}} <br>
+                    Modelo: {{veiculo.modelo}} <br>
+                    Combustível: {{veiculo.combustivel}} <br>
+                    Nº de passageiros: {{veiculo.lugares}}<br>
+                    Preço diário: {{veiculo.preco_dia}}
+                </h5>
+            </div>
+            {%endfor%}
+        </div>
+        <a href="/carList" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
+        {%endif%}
+    </form>
+
+    <br><br>
+    <br><br>
+    <h2 align="center">As nossas marcas</h2>
+</div>
+{%endif%}
 
 <div class="grid-container">
     {%for marca in carro%}
 
     <div class="grid-item">
         <a class="nav-item nav-link" id="home" href="/carList/{{marca.marca}}">
-        <img src="{{ url_for('static', filename='images/' + marca.marca + '.png') }}" alt="{{ marca.marca }}">
+            <img src="{{ url_for('static', filename='images/' + marca.marca + '.png') }}" alt="{{ marca.marca }}">
         </a></div>
     {%endfor%}
 </div>
 
 <form method="get" action="carList/{{marca}}">
-    {%if (url !=marca)%}
-   <div class="grid-container">
+    {%if (url !=lista_marca)%}
+    <div class="grid-container">
 
         {%for veiculo in modelo%}
 
@@ -32,7 +79,8 @@
             <h5> Marca: {{veiculo.marca_carro}} <br>
                 Modelo: {{veiculo.modelo}} <br>
                 Combustível: {{veiculo.combustivel}} <br>
-                Nº de passageiros: {{veiculo.lugares}}
+                Nº de passageiros: {{veiculo.lugares}}<br>
+                Preço diário: {{veiculo.preco_dia}}
             </h5>
         </div>
 
@@ -46,7 +94,7 @@
 
 </form>
 <div>
-<a href="/carList" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
-    </div>
-    {%endif%}
+    <a href="/carList" type="submit" class="btn btn-primary justify-content-between">Voltar</a>
+</div>
+{%endif%}
 {% endblock%}

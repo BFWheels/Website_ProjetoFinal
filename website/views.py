@@ -2,8 +2,11 @@ import datetime
 import json
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from sqlalchemy import or_
 from website import db
 from website.models import Reservas, Carro, Modelo
+
+
 dataHoje = datetime.date.today()
 doisDias = datetime.date(dataHoje.year, dataHoje.month, dataHoje.day - 2)
 dataLegal = datetime.date(dataHoje.year - 1, dataHoje.month, dataHoje.day)
@@ -24,15 +27,46 @@ def home():
 @login_required
 def carlist():
     carro = Carro.query.all()
-    return render_template("carList.html", utilizador=current_user, carro=carro)
+    modelo = Modelo.query.all()
+    combustivel = sorted(set(veiculo.combustivel for veiculo in modelo))
+    lugares = sorted(set(veiculo.lugares for veiculo in modelo))
+    precodia = sorted(set(veiculo.preco_dia for veiculo in modelo))
+
+    return render_template("carList.html", utilizador=current_user, carro=carro, modelo=modelo,
+                           combustivel=combustivel, lugares=lugares, precodia=precodia)
+
+
+@views.route('/carList/Pesquisa', methods=['GET', 'POST'])
+@login_required
+def pesquisa():
+
+    modelo = Modelo.query.all()
+    combustivel = sorted(set(veiculo.combustivel for veiculo in modelo))
+    lugares = sorted(set(veiculo.lugares for veiculo in modelo))
+    precodia = sorted(set(veiculo.preco_dia for veiculo in modelo))
+    pesquisar = url_for('views.pesquisa')
+    if request.method == 'POST':
+        pesquisa_combustivel = request.form.get('combustivel')
+        pesquisa_lugares = request.form.get('lugares')
+        pesquisa_precodia = request.form.get('diaria')
+        condicoes = [
+            Modelo.combustivel == pesquisa_combustivel if pesquisa_combustivel else None,
+            Modelo.lugares == pesquisa_lugares if pesquisa_lugares else None,
+            Modelo.preco_dia == pesquisa_precodia if pesquisa_precodia else None]
+
+    pesquisa = Modelo.query.filter(*[condicao for condicao in condicoes if condicao is not None]).all()
+
+    return render_template("carList.html", utilizador=current_user, modelo=modelo,
+                           combustivel=combustivel, lugares=lugares, precodia=precodia, pesquisar=pesquisar,
+                           pesquisa=pesquisa)
 
 
 @views.route('/carList/<marca>', methods=['GET'])
 @login_required
 def modelist(marca):
     modelo = Modelo.query.filter_by(marca_carro=marca).all()
-    marca = "http://127.0.0.1:5000/carList"
-    return render_template("carList.html", utilizador=current_user, modelo=modelo, marca=marca)
+    lista_marca = url_for('views.modelist', marca=marca)
+    return render_template("carList.html", utilizador=current_user, modelo=modelo, lista_marca=lista_marca)
 
 
 # Routes para reservas
